@@ -74,6 +74,13 @@ async def structured_data_eda(file: UploadFile):
 
     return eda_results
 
+@app.get('/get_data/{column_name}')
+async def get_column_data(column_name: str):
+    try:
+        df = load_data()
+        return df[column_name]
+    except Exception as e:
+        return f"{e}"
 
 @app.put('/update_column/{column_name}')
 async def update_column_endpoint(column_name: str, new_column_name: str):
