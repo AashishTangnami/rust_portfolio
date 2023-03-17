@@ -13,7 +13,7 @@ def df_missing_value(df):
     return df.isna().sum()
 
 def df_dtypes(df):
-    return df.dtypes
+    return df.dtypes.astype(str)
 
 def df_describe(df):
     return df.describe()

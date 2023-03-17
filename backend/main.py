@@ -3,7 +3,7 @@ import json
 import pandas as pd
 
 from fastapi import FastAPI, File, UploadFile
-
+from utils.data_prep import *
 app = FastAPI()
 
 # Path to the JSON file
@@ -53,13 +53,13 @@ async def structured_data_eda(file: UploadFile):
     # Save the data to the JSON file
     save_data(df)
 
-    row, col = df.shape
-    summary = df.describe()
+    row, col = shape_of_dataset(df)
+    summary = df_describe(df)
     unique_vals = df.nunique()
-    count_missing_values = df.isna().sum()
-    data_types = df.dtypes.astype(str).to_dict()
-    first_five = df.head(5)
-    last_five = df.tail(5)
+    count_missing_values = df_missing_value(df)
+    data_types = df_dtypes(df)
+    first_five = df_head(df, 5)
+    last_five = df_tail(df, 5)
 
     eda_results = {
         'num_rows': row,
