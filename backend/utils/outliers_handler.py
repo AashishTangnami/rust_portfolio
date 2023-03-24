@@ -3,6 +3,8 @@ from scipy import stats
 import matplotlib.pyplot as plt
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
+from sklearn.cluster import DBSCAN
+from sklearn.linear_model import HuberRegressor
 
 def inter_quartile_range(df, column_name):
 
@@ -81,5 +83,17 @@ def isolation_forest(df, X):
     outlier_indices = np.where(outliers == -1)[0]
 # DBSCAN Clustering: Density-Based Spatial Clustering of Applications with Noise is a clustering algorithm that can be used to identify outliers based on the density of data points in the vicinity of each point.
 
+
+def dbscan_clustering(X, eps, min_samples):
+    dbscan = DBSCAN(eps=eps, min_samples=min_samples)
+    dbscan.fit(X)
+    labels = dbscan.labels_
+    return labels
+
 # his technique is appropriate when the outliers are in a high-dimensional space or when the distribution of the data is not well-defined
 # Robust Regression: techinque that uses a modified loss function to minmize the effect of outliers on the regression coefficients. Should be used when the outliers are affection the regression analysis.
+def robust_regression(X, y):
+    huber = HuberRegressor()
+    huber.fit(X, y)
+    y_pred = huber.predict(X)
+    return y_pred
