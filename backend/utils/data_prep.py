@@ -1,5 +1,5 @@
 import pandas as pd
-
+#return the shape of data
 def shape_of_dataset(df):
     return df.shape
 
