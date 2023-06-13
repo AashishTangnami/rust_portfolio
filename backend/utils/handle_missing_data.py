@@ -2,6 +2,12 @@ import pandas as pd
 import numpy as np
 from fancyimpute import IterativeImputer
 
+''' 
+Missing data handling should be done in training data.
+Impute missing data in training set for training purpose only.
+
+'''
+
 def missing_data_handler(df, column_name):
     return df[column_name].isna()
 
@@ -13,6 +19,12 @@ def mean_imputation(df, column_name):
     
     return df
 
+def mode_imputation(df, column_name):
+    ''' Imputes missing values in a column using the mode of the non-missing values'''
+    mode_value = df[column_name].mode()
+    df[column_name].fillna(mode_value, inplace=True)
+
+    return df
 
 def multiple_imputation(df, variable_names, num_imputations):
     """Performs multiple imputation on a dataframe using the IterativeImputer algorithm"""
